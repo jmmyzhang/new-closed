@@ -1,0 +1,12 @@
+<a class="item-card" [routerLink]="['/u', username, 'item', item.id]">
+  <img
+    class="item-img"
+    [src]="item.processed_url"
+    [alt]="item.name ?? ''"
+    loading="lazy"
+  />
+  <div class="item-overlay">
+    <span class="item-brand">{{ item.brand }}</span>
+    <span class="item-name">{{ item.name }}</span>
+  </div>
+</a>

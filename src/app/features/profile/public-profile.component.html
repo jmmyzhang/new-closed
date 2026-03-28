@@ -1,0 +1,19 @@
+@if (isLoading()) {
+  <p class="status-label">Loading...</p>
+} @else if (profile(); as p) {
+  <app-profile-header [profile]="p" [pieceCount]="pieceCount().length" />
+
+  <div class="subnav">
+    <button class="subnav-btn" [class.active]="activeSubnav === 'closet'" (click)="activeSubnav = 'closet'">Closet</button>
+    <button class="subnav-btn" disabled>Outfits</button>
+    <button class="subnav-btn" disabled>Collections</button>
+  </div>
+
+  @if (activeSubnav === 'closet') {
+    <app-closet-grid [userId]="p.id" [username]="p.username" />
+  } @else {
+    <p class="status-label">Coming soon.</p>
+  }
+} @else {
+  <p class="status-label">User not found.</p>
+}

@@ -1,0 +1,16 @@
+<div class="profile-header">
+  <div
+    class="avatar"
+    [style.background-image]="profile.avatar_url ? 'url(' + profile.avatar_url + ')' : ''"
+  ></div>
+  <div class="profile-info">
+    <div class="username">&#64;{{ profile.username }}</div>
+    @if (profile.bio) {
+      <p class="bio">{{ profile.bio }}</p>
+    }
+    <div class="stats">
+      <span class="stat-num">{{ pieceCount }}</span>
+      <span class="stat-label">Pieces</span>
+    </div>
+  </div>
+</div>

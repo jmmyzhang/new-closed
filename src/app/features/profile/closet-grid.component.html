@@ -1,0 +1,21 @@
+<div class="filter-bar">
+  @for (f of filters; track f) {
+    <button
+      class="filter-btn"
+      [class.active]="activeFilter() === f"
+      (click)="setFilter(f)"
+    >{{ f }}</button>
+  }
+</div>
+
+@if (isLoading()) {
+  <p class="status-label">Loading...</p>
+} @else if (items().length === 0) {
+  <p class="status-label">No pieces yet.</p>
+} @else {
+  <div class="clothing-grid">
+    @for (item of items(); track item.id) {
+      <app-item-card [item]="item" [username]="username" />
+    }
+  </div>
+}
