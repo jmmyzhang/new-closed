@@ -1,4 +1,4 @@
-import { ApplicationConfig, APP_INITIALIZER } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 import { UploadService } from './features/upload/upload.service';
@@ -6,11 +6,8 @@ import { UploadService } from './features/upload/upload.service';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (uploadService: UploadService) => () => uploadService.initWorker(),
-      deps: [UploadService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      inject(UploadService).initWorker();
+    }),
   ],
 };
