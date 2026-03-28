@@ -29,12 +29,13 @@ export class AuthService {
     });
   }
 
-  signUp(email: string, password: string, username: string) {
-    return this.supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { username } },
-    });
+  async signUp(email: string, password: string, username: string) {
+    const { data, error } = await this.supabase.auth.signUp({ email, password });
+    if (error || !data.user) return { error: error ?? new Error('Signup failed') };
+    const { error: profileError } = await this.supabase
+      .from('profiles')
+      .insert({ id: data.user.id, username });
+    return { error: profileError ?? null };
   }
 
   signIn(email: string, password: string) {
