@@ -1,0 +1,38 @@
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  border-right: 1px solid var(--color-subtle);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.app-name {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--color-fg);
+  text-decoration: none;
+  margin-bottom: auto;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--color-mid);
+  text-decoration: none;
+  padding: 9px 0;
+
+  &.active { color: var(--color-fg); }
+}

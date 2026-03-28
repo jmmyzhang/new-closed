@@ -1,0 +1,34 @@
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #000000;
+  --color-mid: #888888;
+  --color-subtle: #ebebeb;
+  --sidebar-width: 160px;
+  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-size-xs: 9px;
+  --font-size-sm: 10px;
+  --font-size-base: 11px;
+  --letter-spacing-caps: 0.15em;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-shell {
+  display: flex;
+  height: 100vh;
+}
+
+.content-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 36px 44px;
+}
