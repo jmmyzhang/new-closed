@@ -9,8 +9,10 @@ export class AuthService {
   private router = inject(Router);
 
   private _session = signal<Session | null>(null);
+  private _sessionReady = signal(false);
 
   readonly session = this._session.asReadonly();
+  readonly sessionReady = this._sessionReady.asReadonly();
   readonly user = computed(() => this._session()?.user ?? null);
   readonly isLoggedIn = computed(() => this._session() !== null);
 
@@ -18,6 +20,7 @@ export class AuthService {
     // Hydrate session from local storage on startup
     this.supabase.auth.getSession().then(({ data }) => {
       this._session.set(data.session);
+      this._sessionReady.set(true);
     });
 
     // Keep session in sync with Supabase auth state changes
