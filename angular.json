@@ -27,6 +27,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "*.wasm",
+                "input": "node_modules/onnxruntime-web/dist/",
+                "output": "/"
+              },
+              {
+                "glob": "*.mjs",
+                "input": "node_modules/onnxruntime-web/dist/",
+                "output": "/"
               }
             ],
             "styles": [
