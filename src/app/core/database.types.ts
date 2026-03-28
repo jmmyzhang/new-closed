@@ -17,39 +17,39 @@ export type Database = {
       clothing_items: {
         Row: {
           brand: string | null
-          category: string
+          category: string | null
           created_at: string
           description: string | null
           id: string
-          name: string
+          name: string | null
           original_url: string | null
-          processed_url: string | null
+          processed_url: string
           season: string | null
           size: string | null
           user_id: string
         }
         Insert: {
           brand?: string | null
-          category: string
+          category?: string | null
           created_at?: string
           description?: string | null
           id?: string
-          name: string
+          name?: string | null
           original_url?: string | null
-          processed_url?: string | null
+          processed_url: string
           season?: string | null
           size?: string | null
           user_id: string
         }
         Update: {
           brand?: string | null
-          category?: string
+          category?: string | null
           created_at?: string
           description?: string | null
           id?: string
-          name?: string
+          name?: string | null
           original_url?: string | null
-          processed_url?: string | null
+          processed_url?: string
           season?: string | null
           size?: string | null
           user_id?: string
