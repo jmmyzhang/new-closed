@@ -1,0 +1,32 @@
+<h1 class="page-title">Search</h1>
+
+<div class="search-bar">
+  <input
+    class="search-input"
+    type="text"
+    placeholder="Search by username"
+    [ngModel]="query()"
+    (ngModelChange)="onInput($event)"
+    name="search"
+  />
+</div>
+
+@if (isSearching()) {
+  <p class="status-label">Searching...</p>
+} @else if (results().length > 0) {
+  <ul class="results-list">
+    @for (profile of results(); track profile.id) {
+      <li class="result-item">
+        <a class="result-link" [routerLink]="['/u', profile.username]">
+          <div
+            class="result-avatar"
+            [style.background-image]="profile.avatar_url ? 'url(' + profile.avatar_url + ')' : ''"
+          ></div>
+          <span class="result-username">&#64;{{ profile.username }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+} @else if (query().length > 0 && !isSearching()) {
+  <p class="status-label">No results.</p>
+}
