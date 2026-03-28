@@ -1,0 +1,50 @@
+@if (isLoading()) {
+  <p class="status-label">Loading...</p>
+} @else if (item(); as i) {
+  <div class="detail-nav-top">
+    <a class="back-link" [routerLink]="['/u', username]">← &#64;{{ username }}</a>
+    <div class="prev-next">
+      @if (prevItem(); as prev) {
+        <a class="nav-btn" [routerLink]="['/u', username, 'item', prev.id]">← Prev</a>
+      }
+      @if (nextItem(); as next) {
+        <a class="nav-btn" [routerLink]="['/u', username, 'item', next.id]">Next →</a>
+      }
+    </div>
+  </div>
+
+  <div class="detail-layout">
+    <div class="detail-image">
+      <img [src]="i.processed_url" [alt]="i.name ?? 'Clothing item'" />
+    </div>
+
+    <div class="detail-info">
+      @if (i.brand) {
+        <p class="detail-brand">{{ i.brand }}</p>
+      }
+      @if (i.season) {
+        <p class="detail-season">{{ i.season }}</p>
+      }
+      @if (i.name) {
+        <h1 class="detail-name">{{ i.name }}</h1>
+      }
+      @if (i.category) {
+        <div class="detail-meta-row">
+          <span class="meta-label">Category</span>
+          <span>{{ i.category }}</span>
+        </div>
+      }
+      @if (i.size) {
+        <div class="detail-meta-row">
+          <span class="meta-label">Size</span>
+          <span>{{ i.size }}</span>
+        </div>
+      }
+      @if (i.description) {
+        <p class="detail-description">{{ i.description }}</p>
+      }
+    </div>
+  </div>
+} @else {
+  <p class="status-label">Item not found.</p>
+}
