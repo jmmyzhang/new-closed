@@ -1,0 +1,93 @@
+<h1 class="page-title">New Piece</h1>
+
+<div class="upload-layout">
+  <!-- LEFT: image upload + preview -->
+  <div class="upload-image-col">
+    <label class="upload-zone" [class.has-image]="originalPreviewUrl()">
+      @if (!originalPreviewUrl()) {
+        <span class="upload-prompt">
+          @if (stage() === 'loading-model') {
+            <span class="model-loading">Preparing model...</span>
+          } @else {
+            Select Image
+          }
+        </span>
+      }
+      <input type="file" accept="image/*" (change)="onFileChange($event)" style="display:none" />
+    </label>
+
+    @if (stage() === 'loading-model' || stage() === 'processing') {
+      <div class="progress-wrap">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progress()"></div>
+        </div>
+        <p class="progress-label">
+          {{ stage() === 'loading-model' ? 'Preparing model' : 'Removing background' }}
+          — {{ progress() }}%
+        </p>
+      </div>
+    }
+
+    @if (stage() === 'error') {
+      <p class="field-error">{{ uploadError() }}</p>
+    }
+
+    @if (originalPreviewUrl() || processedPreviewUrl()) {
+      <div class="preview-split">
+        @if (originalPreviewUrl()) {
+          <div class="preview-pane">
+            <span class="preview-label">Original</span>
+            <img [src]="originalPreviewUrl()!" alt="Original" />
+          </div>
+        }
+        @if (processedPreviewUrl()) {
+          <div class="preview-pane">
+            <span class="preview-label">Processed</span>
+            <img [src]="processedPreviewUrl()!" alt="Processed" />
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- RIGHT: metadata form -->
+  <form class="upload-form" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <label class="field-label">Brand *</label>
+      <input class="field-input" [ngModel]="brand()" (ngModelChange)="brand.set($event)" name="brand" />
+    </div>
+    <div class="field">
+      <label class="field-label">Season</label>
+      <input class="field-input" placeholder="e.g. FW 2005" [ngModel]="season()" (ngModelChange)="season.set($event)" name="season" />
+    </div>
+    <div class="field">
+      <label class="field-label">Name *</label>
+      <input class="field-input" [ngModel]="name()" (ngModelChange)="name.set($event)" name="name" />
+    </div>
+    <div class="field">
+      <label class="field-label">Category *</label>
+      <select class="field-input" [ngModel]="category()" (ngModelChange)="category.set($event)" name="category">
+        <option value="" disabled>Select</option>
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+        }
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Size *</label>
+      <input class="field-input" placeholder="S / M / L / 32 / OS" [ngModel]="size()" (ngModelChange)="size.set($event)" name="size" />
+    </div>
+    <div class="field">
+      <label class="field-label">Description</label>
+      <textarea class="field-input field-textarea" rows="4" [ngModel]="description()" (ngModelChange)="description.set($event)" name="description"></textarea>
+    </div>
+
+    @if (saveError()) {
+      <p class="field-error">{{ saveError() }}</p>
+    }
+
+    <button class="submit-btn" type="submit" [disabled]="!canSubmit() || saving()">
+      {{ saving() ? 'Saving...' : 'Add to Closet' }}
+    </button>
+  </form>
+</div>
