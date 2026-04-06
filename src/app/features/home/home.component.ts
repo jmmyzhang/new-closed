@@ -1,4 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
-@Component({ selector: 'app-home', standalone: true, template: '' })
-export class HomeComponent {}
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [RouterLink],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
+})
+export class HomeComponent {
+  readonly isLoggedIn = inject(AuthService).isLoggedIn;
+}

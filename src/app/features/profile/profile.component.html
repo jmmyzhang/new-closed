@@ -1,7 +1,12 @@
 @if (isLoading()) {
   <p class="status-label">Loading...</p>
 } @else if (profile(); as p) {
-  <app-profile-header [profile]="p" [pieceCount]="pieceCount().length" />
+  @if (isEditing()) {
+    <app-profile-edit [profile]="p" (done)="isEditing.set(false)" />
+  } @else {
+    <app-profile-header [profile]="p" [pieceCount]="pieceCount().length" />
+    <button class="edit-btn" (click)="isEditing.set(true)">Edit Profile</button>
+  }
 
   <div class="subnav">
     <button class="subnav-btn" [class.active]="activeSubnav === 'closet'" (click)="activeSubnav = 'closet'">Closet</button>

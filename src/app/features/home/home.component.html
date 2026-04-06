@@ -1,0 +1,13 @@
+<div class="home">
+  <p class="tagline">Your wardrobe, catalogued.</p>
+  <p class="sub">Document every piece. Browse what others wear.</p>
+  <div class="actions">
+    @if (isLoggedIn()) {
+      <a class="btn-primary" routerLink="/new">Add a Piece</a>
+      <a class="btn-secondary" routerLink="/profile">My Closet</a>
+    } @else {
+      <a class="btn-primary" routerLink="/signup">Get Started</a>
+      <a class="btn-secondary" routerLink="/search">Browse</a>
+    }
+  </div>
+</div>

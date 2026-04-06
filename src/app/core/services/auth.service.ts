@@ -30,12 +30,15 @@ export class AuthService {
   }
 
   async signUp(email: string, password: string, username: string) {
-    const { data, error } = await this.supabase.auth.signUp({ email, password });
-    if (error || !data.user) return { error: error ?? new Error('Signup failed') };
-    const { error: profileError } = await this.supabase
-      .from('profiles')
-      .insert({ id: data.user.id, username });
-    return { error: profileError ?? null };
+    const { data, error } = await this.supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { username } },
+    });
+    if (error) return { error, needsEmailConfirmation: false };
+    // When email confirmation is required, session is null but user is not
+    const needsEmailConfirmation = !!data.user && !data.session;
+    return { error: null, needsEmailConfirmation };
   }
 
   signIn(email: string, password: string) {

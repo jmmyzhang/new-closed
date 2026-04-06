@@ -1,0 +1,47 @@
+<div class="edit-form">
+  @if (error()) {
+    <p class="edit-error">{{ error() }}</p>
+  }
+
+  <div class="avatar-row">
+    <div
+      class="avatar-preview"
+      [style.background-image]="avatarPreview() ? 'url(' + avatarPreview() + ')' : ''"
+    ></div>
+    <label class="avatar-upload-btn">
+      Change Photo
+      <input type="file" accept="image/*" (change)="onAvatarChange($event)" hidden />
+    </label>
+  </div>
+
+  <div class="field">
+    <label class="field-label">Display Name</label>
+    <input
+      class="field-input"
+      type="text"
+      [ngModel]="displayName()"
+      (ngModelChange)="displayName.set($event)"
+      name="displayName"
+      placeholder="Optional"
+    />
+  </div>
+
+  <div class="field">
+    <label class="field-label">Bio</label>
+    <textarea
+      class="field-input field-textarea"
+      [ngModel]="bio()"
+      (ngModelChange)="bio.set($event)"
+      name="bio"
+      rows="3"
+      placeholder="Optional"
+    ></textarea>
+  </div>
+
+  <div class="edit-actions">
+    <button class="btn-save" (click)="onSave()" [disabled]="saving()">
+      {{ saving() ? 'Saving...' : 'Save' }}
+    </button>
+    <button class="btn-cancel" (click)="onCancel()" [disabled]="saving()">Cancel</button>
+  </div>
+</div>

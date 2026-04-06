@@ -1,15 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ProfileService } from '../../core/services/profile.service';
 import { ClothingItemService } from '../../core/services/clothing-item.service';
 import { ProfileHeaderComponent } from './profile-header.component';
+import { ProfileEditComponent } from './profile-edit.component';
 import { ClosetGridComponent } from './closet-grid.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ProfileHeaderComponent, ClosetGridComponent],
-  templateUrl: './profile.component.html'
+  imports: [ProfileHeaderComponent, ProfileEditComponent, ClosetGridComponent],
+  templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
   private auth = inject(AuthService);
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
   readonly pieceCount = this.itemService.items;
 
   activeSubnav: 'closet' | 'outfits' | 'collections' = 'closet';
+  isEditing = signal(false);
 
   ngOnInit() {
     const userId = this.auth.user()?.id;

@@ -25,27 +25,33 @@ export class ProfileService {
 
   async loadById(id: string): Promise<void> {
     this._isLoading.set(true);
-    const { data } = await this.supabase.client
-      .from('profiles')
-      .select('*')
-      .eq('id', id)
-      .single();
+    const { data } = await this.supabase.client.from('profiles').select('*').eq('id', id).single();
     this._profile.set(data ?? null);
     this._isLoading.set(false);
   }
 
   async updateProfile(
     id: string,
-    updates: Partial<Pick<Profile, 'bio' | 'display_name' | 'avatar_url'>>
+    updates: Partial<Pick<Profile, 'bio' | 'display_name' | 'avatar_url'>>,
   ): Promise<{ error: any }> {
-    const { error } = await this.supabase.client
-      .from('profiles')
-      .update(updates)
-      .eq('id', id);
+    const { error } = await this.supabase.client.from('profiles').update(updates).eq('id', id);
     if (!error) {
-      this._profile.update(p => (p ? { ...p, ...updates } : p));
+      this._profile.update((p) => (p ? { ...p, ...updates } : p));
     }
     return { error };
+  }
+
+  async uploadAvatar(userId: string, file: File): Promise<{ url: string | null; error: any }> {
+    const ext = file.name.split('.').pop() ?? 'jpg';
+    const path = `${userId}/avatar.${ext}`;
+    const { error } = await this.supabase.client.storage
+      .from('avatars')
+      .upload(path, file, { upsert: true });
+    if (error) return { url: null, error };
+    const { data } = this.supabase.client.storage.from('avatars').getPublicUrl(path);
+    // Bust cache by appending a timestamp
+    const url = `${data.publicUrl}?t=${Date.now()}`;
+    return { url, error: null };
   }
 
   clear(): void {
